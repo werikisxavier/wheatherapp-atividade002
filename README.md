@@ -1,1 +1,2 @@
-# wheatherapp-atividade002
+# Atividade_002
+# Werikis Venancio Xavier
