@@ -35,7 +35,7 @@ public class WeatherDataCollection implements ISubject,IObserverLog {
         }else{
         weatherdatas.add(weatherdata);
         notifyObservers();
-        log.escreve("Inclusão" ,weatherdata);
+        log.write("Inclusão" ,weatherdata);
         JOptionPane.showMessageDialog(null, "Sucesso, dado de tempo incluso!");
         }
     }
@@ -43,7 +43,7 @@ public class WeatherDataCollection implements ISubject,IObserverLog {
     public void removeWeatherData(WeatherData weatherdata) {
         weatherdatas.remove(weatherdata);
         notifyObservers();
-        log.escreve("Remocão", weatherdata);
+        log.write("Remocão", weatherdata);
     }
 
     public List<WeatherData> getWeatherdatas() {

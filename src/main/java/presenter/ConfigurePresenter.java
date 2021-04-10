@@ -3,13 +3,9 @@ package presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import java.util.List;
-import model.WeatherData;
 import model.impli.JSONLog;
 import model.impli.WeatherDataCollection;
 import model.impli.XMLLog;
-
 import model.interfaces.IObserverLog;
 import model.interfaces.ISubjectLog;
 import model.interfaces.Log;
@@ -19,9 +15,7 @@ public class ConfigurePresenter implements ISubjectLog {
 
     private static ConfigurePresenter instence = null;
     private final ConfigureView view;
-    private final WeatherDataCollection collectionData;
     private final ArrayList<IObserverLog> observers;
-    private final List<WeatherData> weatherdatas;
     private Log log = null;
 
     private ConfigurePresenter() {
@@ -30,15 +24,22 @@ public class ConfigurePresenter implements ISubjectLog {
         view.setVisible(false);
         view.setLocation(750, 20);
         observers = new ArrayList<>();
-        collectionData = WeatherDataCollection.getInstance();
-        weatherdatas = collectionData.getWeatherdatas();
         registerObserver(WeatherDataCollection.getInstance());
-
         initListeners();
-
     }
 
-    public void initListeners() {
+    public static ConfigurePresenter getInstance() {
+        if (instence == null) {
+            instence = new ConfigurePresenter();
+        }
+        return instence;
+    }
+
+    public ConfigureView getView() {
+        return view;
+    }
+
+    private void initListeners() {
         view.getBtClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,11 +56,11 @@ public class ConfigurePresenter implements ISubjectLog {
                 if (valorSelecionado.equals("XML")) {
                     log = XMLLog.getInstance();
                     notifyObservers();
-                    
+
                 } else if (valorSelecionado.equals("JSON")) {
                     log = JSONLog.getInstance();
                     notifyObservers();
-                    
+
                 } else {
 
                 }
@@ -67,17 +68,6 @@ public class ConfigurePresenter implements ISubjectLog {
             }
         });
 
-    }
-
-    public static ConfigurePresenter getInstance() {
-        if (instence == null) {
-            instence = new ConfigurePresenter();
-        }
-        return instence;
-    }
-
-    public ConfigureView getView() {
-        return view;
     }
 
     @Override
@@ -89,7 +79,7 @@ public class ConfigurePresenter implements ISubjectLog {
     }
 
     @Override
-    public void registerObserver(IObserverLog o) {
+    public final void registerObserver(IObserverLog o) {
         observers.add(o);
     }
 

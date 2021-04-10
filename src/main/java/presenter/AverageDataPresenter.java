@@ -20,22 +20,29 @@ public class AverageDataPresenter implements IObserver {
     private final WeatherDataCollection collectionData;
     private final List<WeatherData> weatherdatas;
 
-    private AverageDataPresenter() {
+    private AverageDataPresenter(WeatherDataCollection collection) {
         view = new AverageDataView();
         view.setSize(300, 220);
         view.setVisible(true);
         view.setLocation(380, 20);
-        collectionData = WeatherDataCollection.getInstance();
+        collectionData = collection;
         weatherdatas = collectionData.getWeatherdatas();
         initListeners();
 
     }
 
-    private void initListeners() {
+    public static AverageDataPresenter getInstance(WeatherDataCollection collection) {
+        if (instence == null) {
+            instence = new AverageDataPresenter(collection);
+        }
+        return instence;
+    }
 
-        Daily daily = new Daily();
-        Weekly weekly = new Weekly();
-        Monthly monthly = new Monthly();
+    public AverageDataView getView() {
+        return view;
+    }
+
+    private void initListeners() {
 
         view.getCbPeriod().addItemListener(new ItemListener() {
             @Override
@@ -45,12 +52,15 @@ public class AverageDataPresenter implements IObserver {
                     String valorSelecionado = e.getItem().toString();
                     switch (valorSelecionado) {
                         case "Diario":
+                            Daily daily = Daily.getInstance();
                             calculateAverage(daily);
                             break;
                         case "Semanal":
+                            Weekly weekly = Weekly.getInstance();
                             calculateAverage(weekly);
                             break;
                         case "Mensal":
+                            Monthly monthly = Monthly.getInstance();
                             calculateAverage(monthly);
                             break;
                         default:
@@ -68,17 +78,6 @@ public class AverageDataPresenter implements IObserver {
         float humidity = calc.calculateHumidity(weatherdatas);
         float pressure = calc.calculatePressure(weatherdatas);
         update(temperature, humidity, pressure);
-    }
-
-    public static AverageDataPresenter getInstance() {
-        if (instence == null) {
-            instence = new AverageDataPresenter();
-        }
-        return instence;
-    }
-
-    public AverageDataView getView() {
-        return view;
     }
 
     private void resetTextFields() {

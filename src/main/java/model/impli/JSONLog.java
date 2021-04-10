@@ -6,11 +6,8 @@
 package model.impli;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import model.WeatherData;
 import model.interfaces.Log;
 import org.json.simple.JSONObject;
@@ -27,6 +24,11 @@ public class JSONLog implements Log {
 
     private static Log instence = null;
 
+    private JSONLog() {
+        obj = new JSONObject();
+        data = new JSONObject();
+    }
+
     public static Log getInstance() {
         if (instence == null) {
             instence = new JSONLog();
@@ -35,10 +37,7 @@ public class JSONLog implements Log {
     }
 
     @Override
-    public void escreve(String operation, WeatherData weatherdata) {
-
-        obj = new JSONObject();
-        data = new JSONObject();
+    public void write(String operation, WeatherData weatherdata) {
 
         data.put("temperatura", weatherdata.getTemperature());
         data.put("humidade", weatherdata.getHumidity());

@@ -6,6 +6,18 @@ import model.WeatherData;
 
 public class Daily implements CalculateAverage {
 
+    private static Daily instence = null;
+    
+    private Daily() {
+    }
+
+    public static Daily getInstance() {
+        if (instence == null) {
+            instence = new Daily();
+        }
+        return instence;
+    }
+    
     @Override
     public float calculateTemperature(List<WeatherData> weatherdatas) {
         float temperature = 0;

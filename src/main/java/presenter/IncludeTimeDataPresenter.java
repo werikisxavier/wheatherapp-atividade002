@@ -16,19 +16,19 @@ public class IncludeTimeDataPresenter implements IObserver {
     private final IncludeTimeDataView view;
     private final WeatherDataCollection collectionData;
 
-    private IncludeTimeDataPresenter(WeatherDataCollection collectionData) {
+    private IncludeTimeDataPresenter(WeatherDataCollection collection) {
         view = new IncludeTimeDataView();
         view.setSize(316, 235);
         view.setVisible(true);
         view.setLocation(20, 20);
-        this.collectionData = collectionData ;
+        this.collectionData = collection ;
         initListeners();
 
     }
 
-    public static IncludeTimeDataPresenter getInstance(WeatherDataCollection collectionData) {
+    public static IncludeTimeDataPresenter getInstance(WeatherDataCollection collection) {
         if (instence == null) {
-            instence = new IncludeTimeDataPresenter(collectionData);
+            instence = new IncludeTimeDataPresenter(collection);
         }
         return instence;
     }

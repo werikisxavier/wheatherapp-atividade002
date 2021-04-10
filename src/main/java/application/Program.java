@@ -1,6 +1,7 @@
 package application;
 
 
+import model.impli.WeatherDataCollection;
 import presenter.MainPresenter;
 
 
@@ -9,9 +10,9 @@ import presenter.MainPresenter;
 public class Program {
 
     public static void main(String[] args) {
-        new MainPresenter();
-
- 
+        
+        WeatherDataCollection collectionData = WeatherDataCollection.getInstance();
+        MainPresenter.getInstance(collectionData);
 
     }
 }

@@ -1,19 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model.impli;
 
 import java.util.List;
 import model.interfaces.CalculateAverage;
 import model.WeatherData;
 
-/**
- *
- * @author W-E-R
- */
 public class Weekly implements CalculateAverage {
+    
+    private static Weekly instence = null;
+    
+    private Weekly() {
+    }
+
+    public static Weekly getInstance() {
+        if (instence == null) {
+            instence = new Weekly();
+        }
+        return instence;
+    }
 
     @Override
     public float calculateTemperature(List<WeatherData> weatherdatas) {

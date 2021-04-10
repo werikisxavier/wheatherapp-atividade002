@@ -16,30 +16,40 @@ import util.DateFormat;
 import view.RecordsView;
 
 public class RecordsPresenter implements IObserver, ISubject {
-
-    private final List<WeatherData> weatherdatas;
-    private ArrayList<IObserver> observers;
+    
     private static RecordsPresenter instence = null;
+    private final List<WeatherData> weatherdatas;
+    private final ArrayList<IObserver> observers;
     private final RecordsView view;
     private DefaultTableModel tbWeatherDatas;
-    private WeatherDataCollection collectionData;
+    private final WeatherDataCollection collectionData;
 
-    private RecordsPresenter() {
+    private RecordsPresenter(WeatherDataCollection collection) {
         view = new RecordsView();
         view.setSize(660, 224);
         view.setVisible(true);
         view.setLocation(380, 292);
         observers = new ArrayList<>();
-        collectionData = WeatherDataCollection.getInstance();
+        collectionData = collection;
         weatherdatas = collectionData.getWeatherdatas();
-        registerObserver(AverageDataPresenter.getInstance());
         
+        registerObserver(AverageDataPresenter.getInstance(collectionData));
         tableInit();
         initListeners();
-
     }
 
-    public void initListeners() {
+    public static RecordsPresenter getInstance(WeatherDataCollection collection) {
+        if (instence == null) {
+            instence = new RecordsPresenter(collection);
+        }
+        return instence;
+    }
+
+    public RecordsView getView() {
+        return view;
+    }
+
+    private void initListeners() {
         view.getBtRemover().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,17 +62,6 @@ public class RecordsPresenter implements IObserver, ISubject {
             }
         });
 
-    }
-
-    public static RecordsPresenter getInstance() {
-        if (instence == null) {
-            instence = new RecordsPresenter();
-        }
-        return instence;
-    }
-
-    public RecordsView getView() {
-        return view;
     }
 
     @Override
@@ -105,14 +104,14 @@ public class RecordsPresenter implements IObserver, ISubject {
         List<WeatherData> auxList = new ArrayList<>(collectionData.getWeatherdatas());
         for (int i = 0; i < auxList.size(); i++) {
             if (view.getTbRecods().getSelectedRow() == i) {
-                collectionData.removeWeatherData(auxList.get(i));         
+                collectionData.removeWeatherData(auxList.get(i));
             }
         }
         notifyObservers();
     }
 
-  @Override
-    public void registerObserver(IObserver o) {
+    @Override
+    public final void registerObserver(IObserver o) {
         observers.add(o);
     }
 

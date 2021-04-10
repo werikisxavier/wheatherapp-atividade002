@@ -27,6 +27,9 @@ public class XMLLog implements Log {
 
     private static Log instence = null;
 
+    private XMLLog() {
+    }
+ 
     public static Log getInstance() {
         if (instence == null) {
             instence = new XMLLog();
@@ -35,7 +38,7 @@ public class XMLLog implements Log {
     }
 
     @Override
-    public void escreve(String operation, WeatherData weatherdata) {
+    public void write(String operation, WeatherData weatherdata) {
 
         try {
 
