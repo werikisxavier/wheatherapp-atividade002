@@ -1,6 +1,7 @@
 
 package presenter;
 
+import model.impli.WeatherDataCollection;
 import view.MainView;
 
 
@@ -10,7 +11,7 @@ public class MainPresenter {
     
     public MainPresenter(){
         view = new MainView();
-        MainScreenPresenter display = new MainScreenPresenter();
+        MainScreenPresenter display = new MainScreenPresenter(WeatherDataCollection.getInstance());
         view.add(display.getView());
         view.setLocationRelativeTo(view.getParent());
         view.setSize(1100,650);

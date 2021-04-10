@@ -3,6 +3,7 @@ package model.impli;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.interfaces.IObserver;
 import model.interfaces.ISubject;
 import model.WeatherData;
@@ -30,11 +31,13 @@ public class WeatherDataCollection implements ISubject,IObserverLog {
 
     public void addWeatherData(WeatherData weatherdata) {
         if(log == null){
-            throw new IllegalArgumentException("Log não configurado!");
-        }
+        JOptionPane.showMessageDialog(null, "É necessário que o Log do sistema esteja configurado!");
+        }else{
         weatherdatas.add(weatherdata);
         notifyObservers();
         log.escreve("Inclusão" ,weatherdata);
+        JOptionPane.showMessageDialog(null, "Sucesso, dado de tempo incluso!");
+        }
     }
 
     public void removeWeatherData(WeatherData weatherdata) {
@@ -71,6 +74,7 @@ public class WeatherDataCollection implements ISubject,IObserverLog {
     @Override
     public void update(Log log) {
         this.log=log;
+        JOptionPane.showMessageDialog(null, "Configuração Log definida com sucesso!");
     }
 
 

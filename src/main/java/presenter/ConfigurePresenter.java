@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 import model.WeatherData;
 import model.impli.JSONLog;
 import model.impli.WeatherDataCollection;
@@ -56,11 +55,11 @@ public class ConfigurePresenter implements ISubjectLog {
                 if (valorSelecionado.equals("XML")) {
                     log = XMLLog.getInstance();
                     notifyObservers();
-                    JOptionPane.showMessageDialog(view, "Configuração Log definida: XML");
+                    
                 } else if (valorSelecionado.equals("JSON")) {
                     log = JSONLog.getInstance();
                     notifyObservers();
-                    JOptionPane.showMessageDialog(view, "Configuração Log definida: JSON");
+                    
                 } else {
 
                 }

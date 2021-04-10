@@ -3,23 +3,22 @@ package presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import model.impli.WeatherDataCollection;
-import util.DateFormat;
 import view.MainScreenView;
 
 public class MainScreenPresenter {
 
     private final MainScreenView view;
     private final WeatherDataCollection collectionData;
-    private final DateFormat dateformat;
 
-    public MainScreenPresenter() {
+
+    public MainScreenPresenter(WeatherDataCollection collectionData) {
         view = new MainScreenView();
         view.setSize(1082, 610);
         view.setVisible(true);
-        collectionData = WeatherDataCollection.getInstance();
-        dateformat = DateFormat.getInstance();
-        collectionData.registerObserver(LastUpdatePresenter.getInstance());
-        collectionData.registerObserver(RecordsPresenter.getInstance());
+        this.collectionData = collectionData;
+        this.collectionData.registerObserver(LastUpdatePresenter.getInstance());
+        this.collectionData.registerObserver(RecordsPresenter.getInstance());
+        this.collectionData.registerObserver(AverageDataPresenter.getInstance());
         
         openViews();
         initListeners();
@@ -42,7 +41,7 @@ public class MainScreenPresenter {
     }
 
     private void openViews() {
-        IncludeTimeDataPresenter display1 = IncludeTimeDataPresenter.getInstance();
+        IncludeTimeDataPresenter display1 = IncludeTimeDataPresenter.getInstance(collectionData);
         view.add(display1.getView());
         LastUpdatePresenter display2 = LastUpdatePresenter.getInstance();
         view.add(display2.getView());
