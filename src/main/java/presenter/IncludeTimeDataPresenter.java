@@ -2,7 +2,10 @@ package presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.interfaces.IObserver;
 import model.WeatherData;
@@ -37,12 +40,16 @@ public class IncludeTimeDataPresenter implements IObserver {
         return view;
     }
 
-    private void initListeners() {
+    private void initListeners()  {
         view.getBtInclude().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                include();
-                cleanTextFields();
+                try {
+                    include();
+                    cleanTextFields();
+                } catch (ParseException ex) {
+                    Logger.getLogger(IncludeTimeDataPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -54,7 +61,7 @@ public class IncludeTimeDataPresenter implements IObserver {
         });
     }
 
-    private void include() {
+    private void include() throws ParseException {
         WeatherData weatherData = new WeatherData();
 
         try {

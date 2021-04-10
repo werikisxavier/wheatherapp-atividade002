@@ -20,16 +20,8 @@ public class DateFormat {
         return instance;
     }
 
-    public static Date parseStringToDate(String date) {
-        Date data = null;
-
-        try {
-            data = sdf.parse(date);
-            return data;
-        } catch (ParseException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-        return data;
+    public static Date parseStringToDate(String date) throws ParseException {
+        return sdf.parse(date);
     }
 
     public static String parseDateToString(Date date) {
@@ -39,7 +31,7 @@ public class DateFormat {
         return sdf.format(date);
     }
 
-        public static String parseToString(Date date) {
+    public static String parseToString(Date date) {
         if (date == null) {
             return null;
         }
