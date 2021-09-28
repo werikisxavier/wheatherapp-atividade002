@@ -63,8 +63,6 @@ public class XMLLog implements Log {
 
         } catch (ParserConfigurationException | TransformerException | IOException ex) {
             Logger.getLogger(XMLLog.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeFile(fileWritter,bufferWritter);
         }
 
     }
@@ -103,16 +101,6 @@ public class XMLLog implements Log {
         dados.setAttributeNode(date);
 
         return document;
-    }
-
-    
-    public void closeFile (FileWriter fileWritter,BufferedWriter bufferWritter){
-        try {
-                fileWritter.close();
-                bufferWritter.close();
-            } catch (IOException ex) {
-                Logger.getLogger(XMLLog.class.getName()).log(Level.SEVERE, null, ex);
-            }
     }
         
 }
