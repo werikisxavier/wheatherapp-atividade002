@@ -29,7 +29,7 @@ public class XMLLog implements Log {
 
     private XMLLog() {
     }
- 
+
     public static Log getInstance() {
         if (instence == null) {
             instence = new XMLLog();
@@ -39,13 +39,14 @@ public class XMLLog implements Log {
 
     @Override
     public void write(String operation, WeatherData weatherdata) {
-
+        FileWriter fileWritter = null;
+        BufferedWriter bufferWritter = null;
         try {
 
             Document document = createnodes(operation, weatherdata);
 
-            FileWriter fileWritter = new FileWriter(new File("out.xml"), true);
-            BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+            fileWritter = new FileWriter(new File("out.xml"), true);
+            bufferWritter = new BufferedWriter(fileWritter);
 
             TransformerFactory tFactory = TransformerFactory.newInstance();
 
@@ -62,6 +63,8 @@ public class XMLLog implements Log {
 
         } catch (ParserConfigurationException | TransformerException | IOException ex) {
             Logger.getLogger(XMLLog.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeFile(fileWritter,bufferWritter);
         }
 
     }
@@ -102,4 +105,14 @@ public class XMLLog implements Log {
         return document;
     }
 
+    
+    public void closeFile (FileWriter fileWritter,BufferedWriter bufferWritter){
+        try {
+                fileWritter.close();
+                bufferWritter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(XMLLog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+        
 }
